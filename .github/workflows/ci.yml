@@ -9,6 +9,7 @@ jobs:
     name: Test Role
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         distro:
           - 'ubuntu2004'
