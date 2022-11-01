@@ -1,2 +1,11 @@
 ---
-# defaults file for emqx
+# Installation options
+emqx_package_name: "emqx"
+emqx_installation_prerequisite_packages:
+  - "curl"
+emqx_repository_installation_script_url: "https://assets.emqx.com/scripts/install-emqx-deb.sh"
+emqx_repository_installation_script_download_dest: "/tmp/install-emqx-deb.sh"
+
+# Service options
+emqx_service_manage: true
+emqx_service_enabled: true

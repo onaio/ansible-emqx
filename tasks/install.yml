@@ -1,0 +1,37 @@
+---
+- name: Update APT cache.
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_os_family == 'Debian'
+
+- name: Install prerequisite packages.
+  ansible.builtin.package:
+    name: "{{ emqx_installation_prerequisite_packages }}"
+    state: present
+
+- name: Download the EMQX repository script.
+  ansible.builtin.get_url:
+    url: "{{ emqx_repository_installation_script_url }}"
+    dest: "{{ emqx_repository_installation_script_download_dest }}"
+    mode: "0755"
+
+- name: Run the EMQX Repository installation script.
+  ansible.builtin.shell: "{{ emqx_repository_installation_script_download_dest }}"
+  register: script_status
+  changed_when: false
+  failed_when: script_status.rc > 1
+  args:
+    executable: /bin/bash
+
+- name: Install EMQX.
+  ansible.builtin.package:
+    name: "{{ emqx_package_name }}"
+    state: present
+
+- name: Ensure EMQX is started and enabled at boot.
+  ansible.builtin.service:
+    name: emqx
+    state: started
+    enabled: "{{ emqx_service_enabled }}"
+  when: emqx_service_manage | bool

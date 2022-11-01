@@ -1,2 +1,5 @@
 ---
-# tasks file for emqx
+- name: Install EMQX
+  ansible.builtin.include_tasks: install.yml
+  tags:
+    - install

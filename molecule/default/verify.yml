@@ -3,6 +3,21 @@
   hosts: all
   gather_facts: false
   tasks:
-  - name: Example assertion
+  - name: Collect facts about system services
+    ansible.builtin.service_facts:
+
+  - name: Print service facts
+    ansible.builtin.debug:
+      var: ansible_facts.services
+
+  - name: Ensure that the 'emqx' service is present
     ansible.builtin.assert:
-      that: true
+      that: ansible_facts.services["emqx.service"] is defined
+
+  - name: Ensure that the 'emqx' service is running
+    ansible.builtin.assert:
+      that: ansible_facts.services["emqx.service"]["state"] == "running"
+
+  - name: Ensure that the 'emqx' service is enabled
+    ansible.builtin.assert:
+      that: ansible_facts.services["emqx.service"]["status"] == "enabled"

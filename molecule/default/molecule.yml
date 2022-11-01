@@ -4,19 +4,18 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: ubuntu-20.04
-    image: geerlingguy/docker-ubuntu2004-ansible:latest
+  - name: instance
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest"
     privileged: true
-    command: /sbin/init
+    command: "/lib/systemd/systemd"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: ubuntu-22.04
-    image: geerlingguy/docker-ubuntu2204-ansible:latest
-    privileged: true
-    command: /sbin/init
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    pre_build_image: true
 provisioner:
   name: ansible
 verifier:
   name: ansible
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .

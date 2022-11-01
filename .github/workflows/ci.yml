@@ -8,11 +8,28 @@ jobs:
   test:
     name: Test Role
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - "ubuntu2004"
+          - "ubuntu2204"
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          path: "${{ github.repository }}"
+          path: "onaio.emqx"
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies
+        run: pip3 install ansible molecule[docker] docker
 
       - name: Run Molecule tests
-        uses: onaio/molecule-action@master
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLORS: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}
