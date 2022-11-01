@@ -3,3 +3,8 @@
   ansible.builtin.include_tasks: install.yml
   tags:
     - install
+
+- name: Configure EMQX
+  ansible.builtin.include_tasks: config.yaml
+  tags:
+    - configure

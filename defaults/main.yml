@@ -9,3 +9,37 @@ emqx_repository_installation_script_download_dest: "/tmp/install-emqx-deb.sh"
 # Service options
 emqx_service_manage: true
 emqx_service_enabled: true
+
+# Node configurations
+emqx_configuration_directory: "/etc/emqx"
+emqx_node_name: "emqx"
+emqx_node_secret_cooke: "somesupersecret"
+emqx_node_data_dir: "/var/lib/emqx"
+
+# Cluster configurations
+emqx_cluster_name: "emqxcl"
+# How the various nodes in the cluster will discover eachother
+# Possible values:
+# - manual
+# - static
+# - mcast
+# - dns
+# - etcd
+# - k8s
+emqx_cluster_discovery_strategy: "manual"
+
+# Listener configurations
+emqx_use_ssl: true
+emqx_listener_bind_port: 8883
+emqx_listener_max_connections: 512000
+
+# SSL Configuration
+emqx_ssl_key_file_path: "/etc/emqx/certs/key.pem"
+emqx_ssl_cert_file_path: "/etc/emqx/certs/cert.pem"
+emqx_ssl_ca_cert_file_path: "/etc/emqx/certs/cacert.pem"
+
+# Management Dashboard Configurations
+emqx_enable_dashboard: true
+emqx_management_dashboard_port: 18083
+emqx_management_dashboard_default_user: "admin"
+emqx_management_dashboard_default_password: "public"

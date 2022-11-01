@@ -1,0 +1,8 @@
+---
+- name: Copy emqx.conf configuration file.
+  template:
+    src: etc/emqx/emqx.conf.j2
+    dest: "{{ emqx_configuration_directory }}/emqx.conf"
+    mode: "0644"
+  notify:
+    - restart_emqx

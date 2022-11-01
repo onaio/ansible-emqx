@@ -1,0 +1,60 @@
+node {
+  name = "{{ emqx_node_name }}@127.0.0.1"
+  cookie = "{{ emqx_node_secret_cookie }}"
+  data_dir = "{{ emqx_node_data_dir }}"
+}
+
+log {
+  file_handlers.default {
+    level = warning
+    file = "/var/log/emqx/emqx.log"
+  }
+}
+
+cluster {
+  name = "{{ emqx_cluster_name }}"
+  discovery_strategy = "{{ emqx_cluster_discovery_strategy }}"
+}
+
+
+{% if emqx_use_ssl %}
+listeners.ssl.default {
+  bind = "0.0.0.0:{{ emqx_listener_bind_port }}"
+  max_connections = {{ emqx_listener_max_connections }}
+  ssl_options {
+    keyfile = "{{ emqx_ssl_key_file_path }}"
+    certfile = "{{ emqx_ssl_cert_file_path }}"
+    cacertfile = "{{ emqx_ssl_ca_cert_file_path }}"
+  }
+}
+{% else %}
+listeners.tcp.default {
+  bind = "0.0.0.0:{{ emqx_listener_bind_port }}"
+  max_connections = {{ emqx_listener_max_connections }}
+}
+{% endif %}
+
+{% if emqx_enable_dashboard %}
+dashboard {
+    listeners.http {
+        bind = {{ emqx_management_dashboard_port }}
+    }
+    default_username = "{{ emqx_management_dashboard_default_user }}"
+    default_password = "{{ emqx_management_dashboard_default_password }}"
+}
+{% endif %}
+
+authorization {
+  deny_action = ignore
+  no_match = allow
+  sources =  [
+    {
+      type = file
+      enable = true
+      # This file is immutable to EMQX.
+      # Once new rules are created from dashboard UI or HTTP API,
+      # the file 'data/authz/acl.conf' is used instead of this one
+      path = "/etc/emqx/acl.conf"
+    }
+  ]
+}
