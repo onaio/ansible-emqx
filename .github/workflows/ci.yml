@@ -26,6 +26,9 @@ jobs:
       - name: Install test dependencies
         run: pip3 install ansible ansible-lint molecule[docker] docker
 
+      - name: Install molecule role dependencies
+        run: ansible-galaxy collection install -r molecule/default/requirements.yml
+
       - name: Run Molecule tests
         run: molecule test
         env:
