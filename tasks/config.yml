@@ -5,4 +5,4 @@
     dest: "{{ emqx_configuration_directory }}/emqx.conf"
     mode: "0644"
   notify:
-    - restart_emqx
+    - Restart EMQX
