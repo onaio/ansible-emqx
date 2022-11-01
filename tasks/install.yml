@@ -2,7 +2,6 @@
 - name: Update APT cache.
   ansible.builtin.apt:
     update_cache: yes
-    cache_valid_time: 3600
   when: ansible_os_family == 'Debian'
 
 - name: Install prerequisite packages.
@@ -23,6 +22,11 @@
   failed_when: script_status.rc > 1
   args:
     executable: /bin/bash
+
+- name: Update APT cache.
+  ansible.builtin.apt:
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
 
 - name: Install EMQX.
   ansible.builtin.package:
