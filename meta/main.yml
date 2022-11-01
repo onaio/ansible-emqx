@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Ona Engineering
+  namespace: onaio
+  description: Install and configure EMQX
+  company: Ona Systems Inc.
+  issue_tracker_url: https://github.com/onaio/ansible-emqx/issues
+  license: Apache-2.0
+  min_ansible_version: "2.1"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - "jammy"
+        - "focal"
+  galaxy_tags: []
+
+dependencies: []
