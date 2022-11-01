@@ -8,3 +8,9 @@
   ansible.builtin.include_tasks: config.yml
   tags:
     - configure
+
+- name: Tune EMQX
+  ansible.builtin.include_tasks: tuning.yml
+  tags:
+    - tune
+  when: emqx_tune_service | bool
