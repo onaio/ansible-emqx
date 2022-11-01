@@ -3,6 +3,6 @@
   ansible.builtin.systemd:
     name: "emqx"
     state: restarted
-    enabled: {{ emqx_service_enabled }}
+    enabled: "{{ emqx_service_enabled }}"
     daemon_reload: true
   when: emqx_service_manage | bool
