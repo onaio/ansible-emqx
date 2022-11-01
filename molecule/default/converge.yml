@@ -2,6 +2,8 @@
 - name: Converge
   hosts: all
   become: true
+  vars:
+    emqx_tune_service: false
   pre_tasks:
     - name: Wait for systemd to complete initialization.
       ansible.builtin.command: systemctl is-system-running

@@ -1,6 +1,6 @@
 ---
 - name: "Load required modules"
-  community.general.system.modprobe:
+  community.general.modprobe:
       name:
         - ip_conntrack
         - nf_conntrack
