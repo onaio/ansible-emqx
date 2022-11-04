@@ -57,7 +57,7 @@
     - name: Tune IPv4 local port range (net.ipv4.ip_local_port_range).
       ansible.posix.sysctl:
         name: net.ipv4.ip_local_port_range
-        value: emqx_net_ipv4_ip_local_port_range
+        value: "{{ emqx_net_ipv4_ip_local_port_range }}"
         sysctl_set: yes
         state: present
         sysctl_file: "/etc/sysctl.conf"
